@@ -5,14 +5,14 @@ import './styles.css';
 import UpdateItemForm from '../../components/UpdateItemForm';
 import DeleteConfirmationModal from '../../components/DeleteConfirmationModal';
 import { useItems } from '../ItemsContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Item } from './types';
 
 const UpdateItemPage: React.FC = () => {
     const { items, updateItem, deleteItem } = useItems();
     const [error, setError] = useState<string | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-
+    const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const item = items.find(i => i.id === Number(id)); 
 
@@ -36,6 +36,7 @@ const UpdateItemPage: React.FC = () => {
     const confirmDelete = () => {
         deleteItem(item.id);
         setShowDeleteModal(false);
+        navigate('/');
     };
 
     const cancelDelete = () => {
